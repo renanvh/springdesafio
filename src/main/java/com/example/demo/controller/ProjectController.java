@@ -16,60 +16,62 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Employee;
+import com.example.demo.model.Project;
 import com.example.demo.service.EmployeeService;
+import com.example.demo.service.ProjectService;
 
 @RestController
-@RequestMapping("/employee")
-public class EmployeeController {
-	
+@RequestMapping("/project")
+public class ProjectController {
+
 	@Autowired
-	private EmployeeService empService;
-	
+	private ProjectService projService;
+
 	@GetMapping("/{id}")
-	public ResponseEntity<Employee> getEmployeeById(@PathVariable int id) {
-		if(empService.getEmployee(id) == null) {
+	public ResponseEntity<Project> getProjectById(@PathVariable int id) {
+		if (projService.getProject(id) == null) {
 			return ResponseEntity.notFound().build();
-		}else {
-			return ResponseEntity.ok(empService.getEmployee(id));
+		} else {
+			return ResponseEntity.ok(projService.getProject(id));
 		}
 	}
-	
+
 	@GetMapping
-	public List<Employee> list(){
-		return empService.getAllEmployee();
+	public List<Project> list() {
+		return projService.getAllProjects();
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Employee> add(@Valid @RequestBody Employee emp) {
+	public ResponseEntity<Project> add(@Valid @RequestBody Project proj) {
 		try {
-			if(empService.addEmployee(emp).equals(null)) {
+			if(projService.addProject(proj).equals(null)) {
 				return ResponseEntity.badRequest().build();
 			}else {
-				return ResponseEntity.ok(empService.addEmployee(emp));
+				return ResponseEntity.ok(projService.addProject(proj));
 			}
 		}catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
 	}
-	
+
 	@PutMapping("/{id}")
-	public ResponseEntity<Employee> editEmployee(@Valid @PathVariable int id, @RequestBody Employee emp) {
+	public ResponseEntity<Project> editProject(@Valid @PathVariable int id, @RequestBody Project proj) {
 		try {
-			if(empService.editEmployee(id, emp) == null) {
+			if (projService.editProject(id, proj) == null) {
 				return ResponseEntity.notFound().build();
-			}else {
-				return ResponseEntity.ok(empService.editEmployee(id, emp));
+			} else {
+				return ResponseEntity.ok(projService.editProject(id, proj));
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Employee> removeEmployee(@PathVariable int id, Employee emp) {
-		if(empService.removeEmployee(id, emp) == false) {
+	public ResponseEntity<Project> removeEmployee(@PathVariable int id, Project proj) {
+		if (projService.removeProject(id, proj) == false) {
 			return ResponseEntity.notFound().build();
-		}else {
+		} else {
 			return ResponseEntity.noContent().build();
 		}
 	}

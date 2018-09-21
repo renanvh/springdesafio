@@ -48,13 +48,13 @@ public class EmployeeService {
 		}
 	}
 	
-	public Employee removeEmployee(int id, Employee emp) {
+	public Boolean removeEmployee(int id, Employee emp) {
 		Optional<Employee> empOnDb = empDao.findById(id);
 		if (!empOnDb.isPresent()) {
-			return null;
+			return false;
 		}else {
-			empDao.deleteById(id);
-			return empOnDb.get();
+			empDao.delete(emp);
+			return true;
 		}
 		
 	}
