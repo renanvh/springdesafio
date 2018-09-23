@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.EmployeeDao;
 import com.example.demo.model.Employee;
+import com.example.demo.model.Project;
 @Service
 public class EmployeeService {
 
@@ -57,5 +58,21 @@ public class EmployeeService {
 			return true;
 		}
 		
+	}
+	
+	public Boolean addProject(Employee emp, Project proj) {
+		if(emp.getProjects().contains(proj)) {
+			return false;
+		}else if(emp.getProjects().size() >= 2) {
+			return false;
+		}else {
+			emp.getProjects().add(proj);
+			
+			Employee instanceEmp = empDao.findById(emp.getId()).get();
+			BeanUtils.copyProperties(emp, instanceEmp, "id");
+			
+			empDao.save(instanceEmp);
+			return true;	
+		}
 	}
 }

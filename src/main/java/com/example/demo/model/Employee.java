@@ -1,17 +1,24 @@
 package com.example.demo.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
+@Table(name = "tb_employee")
 public class Employee {
 	
 	@Id
@@ -26,6 +33,21 @@ public class Employee {
 	
 	private BigDecimal salary;
 	
+	@ManyToMany(fetch =FetchType.EAGER)
+	@JoinTable(
+			name = "tb_emp_proj",
+			joinColumns = @JoinColumn(name = "employee_id"),
+			inverseJoinColumns = @JoinColumn(name = "project_id")
+			
+	)
+	private List<Project> projects;	
+	
+	public List<Project> getProjects() {
+		return projects;
+	}
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -43,5 +65,14 @@ public class Employee {
 	}
 	public void setSalary(BigDecimal salary) {
 		this.salary = salary;
+	}
+	
+	public Boolean checkProjectName(String nameProject) {
+		for (Project project : projects) {
+			if(project.getName().equals(nameProject)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

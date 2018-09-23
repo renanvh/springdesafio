@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Employee;
+import com.example.demo.model.Project;
 import com.example.demo.service.EmployeeService;
+import com.example.demo.service.ProjectService;
 
 @RestController
 @RequestMapping("/employee")
@@ -24,6 +26,10 @@ public class EmployeeController {
 	
 	@Autowired
 	private EmployeeService empService;
+	
+	@Autowired
+	private ProjectService projService;
+
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable int id) {
@@ -71,6 +77,24 @@ public class EmployeeController {
 			return ResponseEntity.notFound().build();
 		}else {
 			return ResponseEntity.noContent().build();
+		}
+	}
+	
+	@PostMapping("/{id}/project/{pid}")
+	public ResponseEntity<Employee> addToProject(@Valid @PathVariable int id,
+			@PathVariable int pid) {
+		try {
+			if((empService.getEmployee(id) == null) ||  (projService.getProject(pid) == null)) {
+				return ResponseEntity.notFound().build();
+			}
+			else if(empService.addProject(empService.getEmployee(id),projService.getProject(pid))) {
+				return ResponseEntity.ok(empService.getEmployee(id));
+			}else {
+				return ResponseEntity.badRequest().build();
+			}
+			
+		}catch (Exception e) {
+			return ResponseEntity.badRequest().build();
 		}
 	}
 }
