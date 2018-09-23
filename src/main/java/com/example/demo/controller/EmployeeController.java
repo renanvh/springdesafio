@@ -97,4 +97,9 @@ public class EmployeeController {
 			return ResponseEntity.badRequest().build();
 		}
 	}
+	
+	@GetMapping("/doubleprojects")
+	public List<Employee> doubleProjects(){
+		return empService.getEmployeeDoubleProject();
+	}
 }

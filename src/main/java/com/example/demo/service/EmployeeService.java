@@ -75,4 +75,15 @@ public class EmployeeService {
 			return true;	
 		}
 	}
+	
+	public List<Employee> getEmployeeDoubleProject(){
+		Iterable<Employee> source = empDao.findAll();
+		List<Employee> listEmp = new ArrayList<>();
+		for (Employee employee : source) {
+			if(employee.getProjects().size()>1) {
+				listEmp.add(employee);
+			}
+		}
+		return listEmp;
+	}
 }
