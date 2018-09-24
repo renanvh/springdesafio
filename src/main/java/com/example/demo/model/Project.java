@@ -25,6 +25,10 @@ public class Project {
 	@Column(unique=true)
 	private String name;
 
+	public Project() {
+		
+	}
+	
 	public Integer getId() {
 		return id;
 	}

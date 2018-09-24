@@ -48,6 +48,9 @@ public class Employee {
 	public void setProjects(List<Project> projects) {
 		this.projects = projects;
 	}
+	public Employee() {
+		
+	}
 	public Integer getId() {
 		return id;
 	}

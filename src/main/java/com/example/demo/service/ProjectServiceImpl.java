@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import com.example.demo.model.Project;
 @Transactional
 public class ProjectServiceImpl implements ProjectService{
 
+	static final Logger logger = LogManager.getLogger(ProjectServiceImpl.class);
+	
 	@Autowired
 	ProjectDao projDao;
 	

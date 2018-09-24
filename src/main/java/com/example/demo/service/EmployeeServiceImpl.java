@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ import com.example.demo.model.Project;
 @Transactional
 public class EmployeeServiceImpl implements EmployeeService {
 
+	static final Logger logger = LogManager.getLogger(EmployeeServiceImpl.class);
+	
 	@Autowired
 	EmployeeDao empDao;
 	
@@ -36,7 +40,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Iterable<Employee> source = empDao.findAll();
 		List<Employee> listEmp = new ArrayList<>();
 		source.forEach(listEmp::add);
-		
 		return listEmp;
 	}
 	

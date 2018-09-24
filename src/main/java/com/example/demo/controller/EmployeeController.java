@@ -29,7 +29,6 @@ public class EmployeeController {
 	@Autowired
 	private ProjectService projService;
 
-	
 	@GetMapping("/{id}")
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable int id) {
 		if(empService.getEmployee(id) == null) {
@@ -91,7 +90,6 @@ public class EmployeeController {
 			}else {
 				return ResponseEntity.badRequest().build();
 			}
-			
 		}catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
